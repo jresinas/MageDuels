@@ -58,3 +58,8 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+/Assets/Imports/
+/Assets/Resources/Mages/Skins/*
+!/Assets/Resources/Mages/Skins/Alpha/
+!/Assets/Resources/Mages/Skins/Beta/
+
