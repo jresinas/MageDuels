@@ -62,4 +62,5 @@ crashlytics-build.properties
 /Assets/Resources/Mages/Skins/*
 !/Assets/Resources/Mages/Skins/Alpha/
 !/Assets/Resources/Mages/Skins/Beta/
+/Assets/Resources/Mages/Animations/Tmp/
 

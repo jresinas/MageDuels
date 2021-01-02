@@ -14,7 +14,7 @@ public class MageController : MonoBehaviour
     // Puntos de vida
     private int life = 10;
     // libro de hechizos (lista de hechizos seleccionados). El orden determina el botón de activación
-    private string[] spellBook = new string[3] { "SpellDown", "SpellCircle", "SpellFire" };
+    private string[] spellBook = new string[4] { "SpellDown", "SpellCircle", "SpellFire", "SpellFireBall" };
 
     private Animator animator;
     private Rigidbody rb;
@@ -157,6 +157,7 @@ public class MageController : MonoBehaviour
         animator.SetBool("SpellDown", false);
         animator.SetBool("SpellCircle", false);
         animator.SetBool("SpellFire", false);
+        animator.SetBool("SpellFireBall", false);
     }
 
     /*
@@ -174,6 +175,7 @@ public class MageController : MonoBehaviour
         return animator.GetBool("SpellDown") ||
                animator.GetBool("SpellCircle") ||
                animator.GetBool("SpellFire") ||
+               animator.GetBool("SpellFireBall") ||
                animator.GetBool("Damage");
     }
 
@@ -188,7 +190,11 @@ public class MageController : MonoBehaviour
 
         GameObject spellInst = Instantiate(spell.prefab, transform.position + spell.offset + (playerNumber==1? 2*Vector3.left*spell.offset.x : Vector3.zero), (playerNumber == 1 ? Quaternion.Euler(0, 180, 0) : Quaternion.Euler(0, 0, 0)));
         Destroy(spellInst, spell.duration);
-        spellInst.GetComponent<SpellController>().player = playerNumber;
+        
+        ISpellController spellController = spellInst.GetComponent<ISpellController>();
+        spellController.playerNumber = playerNumber;
+        spellController.spellName = spellName;
+        //spellInst.GetComponent<SpellController>().name = spellName;
     }
 
     /*
@@ -205,14 +211,21 @@ public class MageController : MonoBehaviour
      * particle: objeto del sistema de particulas
      */
     void OnParticleCollision(GameObject particle) {
-        int casterPlayer = particle.GetComponentInParent<SpellController>().player;
-        GameObject spell = particle.transform.root.gameObject;
-        Debug.Log("Hechizo "+ spell + " lanzado por jugador "+casterPlayer+" impacta en jugador "+playerNumber);
+        ISpellController spell = particle.GetComponentInParent<ISpellController>();
+        //int casterPlayer = particle.GetComponentInParent<SpellController>().player;
+        //string spellName = particle.GetComponentInParent<SpellController>().name;
+        
+        
+        //GameObject spell = particle.transform.root.gameObject;
+        //Debug.Log("Hechizo "+ spell + " lanzado por jugador "+casterPlayer+" impacta en jugador "+playerNumber);
+        Debug.Log("Impacto");
 
-        if (casterPlayer != playerNumber) {
+        if (spell.playerNumber != playerNumber) {
+            Debug.Log("Impacto al enemigo");
             ClearAnimations();
-            animator.SetBool("Damage", true);
-            life--;
+            animator.SetBool(spell.ImpactReact(), true);
+            life -= spell.ImpactDamage();
+            spell.Impact();
         }
     }
 }
