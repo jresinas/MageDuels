@@ -26,7 +26,7 @@ public class SpellFireBallController : MonoBehaviour, ISpellController {
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(new Vector3(0.04f, 0f, 0f));
+        transform.Translate(new Vector3(0.08f, 0f, 0f));
     }
 
     public int ImpactDamage() {
@@ -34,7 +34,8 @@ public class SpellFireBallController : MonoBehaviour, ISpellController {
     }
 
     public string ImpactReact() {
-        return "Damage";
+        return "Fall";
+        //return "Damage";
     }
 
     public void Impact() {

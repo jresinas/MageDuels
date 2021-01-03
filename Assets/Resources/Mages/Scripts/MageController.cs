@@ -23,6 +23,9 @@ public class MageController : MonoBehaviour
     public Text PlayerLife;
 
 
+    public bool fallInAir=false;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -111,7 +114,12 @@ public class MageController : MonoBehaviour
         if (animator.GetBool("Damage")) {
             rb.MovePosition(rb.position + 1.2f * Time.deltaTime * (playerNumber == 0? Vector3.left : Vector3.right));
         }
+
+        if (animator.GetBool("Fall") && fallInAir) {
+            rb.MovePosition(rb.position + 2.4f * Time.deltaTime * (playerNumber == 0 ? Vector3.left : Vector3.right));
+        }
     }
+
 
     /*
      * Controla la ejecución de los hechizos
@@ -176,7 +184,8 @@ public class MageController : MonoBehaviour
                animator.GetBool("SpellCircle") ||
                animator.GetBool("SpellFire") ||
                animator.GetBool("SpellFireBall") ||
-               animator.GetBool("Damage");
+               animator.GetBool("Damage") ||
+               animator.GetBool("Fall");
     }
 
 

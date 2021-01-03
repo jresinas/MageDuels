@@ -2150,6 +2150,7 @@ GameObject:
   - component: {fileID: 1333358298}
   - component: {fileID: 1333358297}
   - component: {fileID: 1333358296}
+  - component: {fileID: 1333358300}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -2171,6 +2172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 1
   PlayerLife: {fileID: 224402095}
+  fallInAir: 0
 --- !u!136 &1333358297
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2180,7 +2182,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1333358295}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.1627792
   m_Height: 1.8889952
   m_Direction: 1
@@ -2221,6 +2223,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!65 &1333358300
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333358295}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 2, z: 0.5}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1333997876 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 770fe2b58b72b294bae8f63e7f582df5,
@@ -3711,6 +3726,7 @@ GameObject:
   - component: {fileID: 7626600783594081793}
   - component: {fileID: 7626600783594081792}
   - component: {fileID: 7626600783594081791}
+  - component: {fileID: 7626600783594081794}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -3732,6 +3748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 0
   PlayerLife: {fileID: 77749445}
+  fallInAir: 0
 --- !u!136 &7626600783594081792
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3741,11 +3758,11 @@ CapsuleCollider:
   m_GameObject: {fileID: 7626600783594081790}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.19973151
-  m_Height: 1.8889952
+  m_Enabled: 0
+  m_Radius: 0.4
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: -0.010169059, y: 1, z: 3.3488745e-17}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &7626600783594081793
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3762,3 +3779,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!65 &7626600783594081794
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7626600783594081790}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 2, z: 0.5}
+  m_Center: {x: 0, y: 1, z: 0}

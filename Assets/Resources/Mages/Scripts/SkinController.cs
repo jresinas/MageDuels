@@ -37,4 +37,8 @@ public class SkinController : MonoBehaviour
         mc.FinishAnimation(spellName);
 
     }
+
+    private void FallInAir(int state) {
+        mc.fallInAir = (state>0);
+    }
 }
