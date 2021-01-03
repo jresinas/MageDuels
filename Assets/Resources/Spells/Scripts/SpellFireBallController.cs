@@ -7,6 +7,7 @@ public class SpellFireBallController : MonoBehaviour, ISpellController {
     private int _playerNumber;
     // Nombre del hechizo
     private string _spellName;
+    public GameObject explosion_prefab;
 
     public int playerNumber {
         get => _playerNumber;
@@ -20,13 +21,12 @@ public class SpellFireBallController : MonoBehaviour, ISpellController {
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(new Vector3(0.04f,0f,0f));
+        transform.Translate(new Vector3(0.04f, 0f, 0f));
     }
 
     public int ImpactDamage() {
@@ -38,6 +38,11 @@ public class SpellFireBallController : MonoBehaviour, ISpellController {
     }
 
     public void Impact() {
-        Destroy(this.gameObject);
+        //GameObject exp_prefab = (GameObject)Resources.Load("Spells/Prefabs/Others/Explosion", typeof(GameObject));
+
+        Destroy(gameObject);
+        GameObject explosion = Instantiate(explosion_prefab, transform.position, transform.rotation);
+        Destroy(explosion, 1f);
     }
+
 }

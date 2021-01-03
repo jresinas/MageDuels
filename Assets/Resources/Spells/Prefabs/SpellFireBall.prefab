@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2742196255939995385}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7801733281545937693}
@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c375be36e0504584eb2f3198ac080f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosion_prefab: {fileID: 100006, guid: f26f5647c167690418694ab164a14125, type: 3}
 --- !u!1 &7803034715983343921
 GameObject:
   m_ObjectHideFlags: 0
@@ -3829,7 +3830,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     minKillSpeed: 0
-    maxKillSpeed: 0
+    maxKillSpeed: 1
     radiusScale: 0.0001
     collidesWith:
       serializedVersion: 2
@@ -8649,7 +8650,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     minKillSpeed: 0
-    maxKillSpeed: 0
+    maxKillSpeed: 1
     radiusScale: 0.0001
     collidesWith:
       serializedVersion: 2
@@ -13465,7 +13466,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     minKillSpeed: 0
-    maxKillSpeed: 0
+    maxKillSpeed: 1
     radiusScale: 0.0001
     collidesWith:
       serializedVersion: 2
@@ -18281,7 +18282,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     minKillSpeed: 0
-    maxKillSpeed: 0
+    maxKillSpeed: 1
     radiusScale: 0.0001
     collidesWith:
       serializedVersion: 2
@@ -23097,7 +23098,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     minKillSpeed: 0
-    maxKillSpeed: 0
+    maxKillSpeed: 100000
     radiusScale: 0.5
     collidesWith:
       serializedVersion: 2
