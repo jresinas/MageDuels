@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class MageController : MonoBehaviour
 {
+    // Indica el tiempo (en seg) para incrementar 0.5 de energía
+    private float ENERGY_INCREASE_TIME = 2.5f;
+
     // Numero de jugador 0 o 1
     public int playerNumber;
     // Velocidad de movimiento cuando anda hacia delante
@@ -12,17 +15,19 @@ public class MageController : MonoBehaviour
     // Velocidad de movimiento cuando anda hacia atrás
     private float backSpeed = 1.4f;
     // Puntos de vida
-    private int life = 10;
+    public float life = 10f;
+    // Puntos de energía
+    public float energy = 5f;
     // libro de hechizos (lista de hechizos seleccionados). El orden determina el botón de activación
-    private string[] spellBook = new string[4] { "SpellDown", "SpellCircle", "SpellFire", "SpellFireBall" };
+    public string[] spellBook = new string[] { "SpellDown", "SpellCircle", "SpellFire", "SpellFireBall" };
 
     private Animator animator;
     private Rigidbody rb;
 
-    public List<ParticleCollisionEvent> collisionEvents;
     public Text PlayerLife;
+    public Text PlayerEnergy;
 
-
+    // Variable auxiliar para cuando tiran al personaje. Identifica cuando está en el aire
     public bool fallInAir=false;
 
 
@@ -31,32 +36,39 @@ public class MageController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
-        collisionEvents = new List<ParticleCollisionEvent>();
+        StartCoroutine(Energy());
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        Move();
-        Spells();
         Damage();
-        //ChangeCharacter();
 
         PlayerLife.text = life.ToString();
+        PlayerEnergy.text = energy.ToString();
 
     }
+
+    IEnumerator Energy() {
+        WaitForSeconds wait = new WaitForSeconds(ENERGY_INCREASE_TIME);
+        if (energy < 10) {
+            energy += 0.5f;
+        }
+        yield return wait;
+        StartCoroutine(Energy());
+    }
+
 
     /*
      * Controla el movimiento del personaje
      */
-    private void Move() {
+    public void Move(float HorizontalMove, float VerticalMove) {
         // Velocidad real de movimiento
         float speed = 0;
-        // Obtenemos la dirección del movimiento
-        float HorizontalMove = Input.GetAxis("Horizontal_"+playerNumber);
-        float VerticalMove = Input.GetAxis("Vertical_"+playerNumber);
-
+        //// Obtenemos la dirección del movimiento
+        //float HorizontalMove = Input.GetAxis("Horizontal_"+playerNumber);
+        //float VerticalMove = Input.GetAxis("Vertical_"+playerNumber);
 
         if (!Busy()) {
             // Vector del movimiento respecto al mundo
@@ -108,7 +120,7 @@ public class MageController : MonoBehaviour
     }
 
     /*
-     * Controla el retroceso del personaje al recibir daño
+     * Controla la reacción del personaje al recibir daño
      */
     private void Damage() {
         if (animator.GetBool("Damage")) {
@@ -116,36 +128,8 @@ public class MageController : MonoBehaviour
         }
 
         if (animator.GetBool("Fall") && fallInAir) {
-            rb.MovePosition(rb.position + 2.4f * Time.deltaTime * (playerNumber == 0 ? Vector3.left : Vector3.right));
+            rb.MovePosition(rb.position + 4.4f * Time.deltaTime * (playerNumber == 0 ? Vector3.left : Vector3.right));
         }
-    }
-
-
-    /*
-     * Controla la ejecución de los hechizos
-     */
-    private void Spells() {
-            
-        if (!Busy()) { 
-            for (int i = 0; i < spellBook.Length; i++) {
-                if (Input.GetButton("Spell" + i + "_" + playerNumber)) {
-                    animator.SetBool(spellBook[i], true);
-                }
-            }
-            //    if (Input.GetButton("Spell0_" + playerNumber)) {
-            //        animator.SetBool(spellBook[0], true);
-            //    }
-            //    if (Input.GetButton("Spell1_" + playerNumber)) {
-            //        animator.SetBool(spellBook[1], true);
-            //    }
-            //    if (Input.GetButton("Spell2_" + playerNumber)) {
-            //        Debug.Log("Lanza: " + playerNumber);
-            //        animator.SetBool(spellBook[2], true);
-            //    }
-            //    if (Input.GetButton("Spell3_" + playerNumber)) {
-            //        animator.SetBool(spellBook[3], true);
-            //    }
-            }
     }
 
     /*
@@ -179,7 +163,7 @@ public class MageController : MonoBehaviour
     /* 
      * Indica si hay alguna animación ejecutandose que impida el movimiento del personaje
      */
-    private bool Busy() {
+    public bool Busy() {
         return animator.GetBool("SpellDown") ||
                animator.GetBool("SpellCircle") ||
                animator.GetBool("SpellFire") ||
@@ -188,6 +172,14 @@ public class MageController : MonoBehaviour
                animator.GetBool("Fall");
     }
 
+
+    public void StartCastingSpell(string spellName) {
+        Spell spell = Initialize.spells[spellName];
+        if (energy >= spell.energy) {
+            animator.SetBool(spellName, true);
+            energy -= spell.energy;
+        }
+    }
 
     /*
      * Se llama desde un evento de animación de un hechizo, e indica que comienza a emitirse el sistema de particulas asociado
@@ -198,6 +190,7 @@ public class MageController : MonoBehaviour
         Spell spell = Initialize.spells[spellName];
 
         GameObject spellInst = Instantiate(spell.prefab, transform.position + spell.offset + (playerNumber==1? 2*Vector3.left*spell.offset.x : Vector3.zero), (playerNumber == 1 ? Quaternion.Euler(0, 180, 0) : Quaternion.Euler(0, 0, 0)));
+        spellInst.tag = "Player"+playerNumber+"Spell";
         Destroy(spellInst, spell.duration);
         
         ISpellController spellController = spellInst.GetComponent<ISpellController>();
@@ -218,29 +211,18 @@ public class MageController : MonoBehaviour
      * Detecta la colisión con un sistema de particulas (hechizos)
      * particle: objeto del sistema de particulas
      */
-    //void OnParticleCollision(GameObject particle) {
-    //    ISpellController spell = particle.GetComponentInParent<ISpellController>();
-    //    Debug.Log("Impacto");
-
-    //    if (spell.playerNumber != playerNumber) {
-    //        Debug.Log("Impacto al enemigo");
-    //        ClearAnimations();
-    //        animator.SetBool(spell.ImpactReact(), true);
-    //        life -= spell.ImpactDamage();
-    //        spell.Impact();
-    //    }
-    //}
-
     private void OnTriggerEnter(Collider collider) {
         ISpellController spell = collider.GetComponent<ISpellController>();
-        Debug.Log("El jugador " + playerNumber + " ha sido impactado por una " + spell.spellName + " lanzada por el jugador " + spell.playerNumber);
+        if (spell != null) {
+            Debug.Log("El jugador " + playerNumber + " ha sido impactado por una " + spell.spellName + " lanzada por el jugador " + spell.playerNumber);
 
-        if (spell.playerNumber != playerNumber) {
-            Debug.Log("Impacto al enemigo");
-            ClearAnimations();
-            animator.SetBool(spell.ImpactReact(), true);
-            life -= spell.ImpactDamage();
-            spell.Impact();
+            if (spell.playerNumber != playerNumber) {
+                Debug.Log("Impacto al enemigo");
+                ClearAnimations();
+                animator.SetBool(spell.ImpactReact(), true);
+                life -= spell.ImpactDamage();
+                spell.Impact();
+            }
         }
     }
 }
