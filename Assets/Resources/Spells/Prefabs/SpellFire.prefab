@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 436072}
   - component: {fileID: -885857318097184899}
+  - component: {fileID: 5211365188217640985}
   m_Layer: 0
   m_Name: SpellFire
   m_TagString: Untagged
@@ -44,6 +45,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda34dce4292f4d4a8260e05d010f335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &5211365188217640985
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118636}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1
+  m_Height: 0
+  m_Direction: 0
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &151880
 GameObject:
   m_ObjectHideFlags: 0
@@ -3600,7 +3615,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     type: 1
     collisionMode: 0
@@ -8362,7 +8377,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     type: 1
     collisionMode: 0

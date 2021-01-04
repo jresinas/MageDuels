@@ -203,7 +203,6 @@ public class MageController : MonoBehaviour
         ISpellController spellController = spellInst.GetComponent<ISpellController>();
         spellController.playerNumber = playerNumber;
         spellController.spellName = spellName;
-        //spellInst.GetComponent<SpellController>().name = spellName;
     }
 
     /*
@@ -219,15 +218,22 @@ public class MageController : MonoBehaviour
      * Detecta la colisión con un sistema de particulas (hechizos)
      * particle: objeto del sistema de particulas
      */
-    void OnParticleCollision(GameObject particle) {
-        ISpellController spell = particle.GetComponentInParent<ISpellController>();
-        //int casterPlayer = particle.GetComponentInParent<SpellController>().player;
-        //string spellName = particle.GetComponentInParent<SpellController>().name;
-        
-        
-        //GameObject spell = particle.transform.root.gameObject;
-        //Debug.Log("Hechizo "+ spell + " lanzado por jugador "+casterPlayer+" impacta en jugador "+playerNumber);
-        Debug.Log("Impacto");
+    //void OnParticleCollision(GameObject particle) {
+    //    ISpellController spell = particle.GetComponentInParent<ISpellController>();
+    //    Debug.Log("Impacto");
+
+    //    if (spell.playerNumber != playerNumber) {
+    //        Debug.Log("Impacto al enemigo");
+    //        ClearAnimations();
+    //        animator.SetBool(spell.ImpactReact(), true);
+    //        life -= spell.ImpactDamage();
+    //        spell.Impact();
+    //    }
+    //}
+
+    private void OnTriggerEnter(Collider collider) {
+        ISpellController spell = collider.GetComponent<ISpellController>();
+        Debug.Log("El jugador " + playerNumber + " ha sido impactado por una " + spell.spellName + " lanzada por el jugador " + spell.playerNumber);
 
         if (spell.playerNumber != playerNumber) {
             Debug.Log("Impacto al enemigo");

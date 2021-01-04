@@ -11,7 +11,7 @@ public class Initialize : MonoBehaviour
     {
         spells["SpellDown"] = new Spell("SpellDown", 3f, offset: new Vector3(0.8f, 0.5f, 0f));
         spells["SpellCircle"] = new Spell("SpellCircle", 2f, offset: new Vector3(0f, 0.2f, 0f));
-        spells["SpellFire"] = new Spell("SpellFire", 3f, offset: new Vector3(0.8f, 1f, 0f));
+        spells["SpellFire"] = new Spell("SpellFire", 2.2f, offset: new Vector3(0.8f, 1f, 0f));
         spells["SpellFireBall"] = new Spell("SpellFireBall", 10f, offset: new Vector3(0.6f, 1f, 0f));
     }
 
