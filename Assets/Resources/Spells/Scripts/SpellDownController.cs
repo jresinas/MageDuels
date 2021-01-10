@@ -6,6 +6,8 @@ public class SpellDownController : MonoBehaviour, ISpellController {
     // Número del jugador que lo ha invocado
     private int _playerNumber;
     // Nombre del hechizo
+    private Vector3 _direction = new Vector3(1f, 0f, 0f);
+    private float _velocity = 0.01f;
     private string _spellName;
 
     public int playerNumber {
@@ -16,6 +18,12 @@ public class SpellDownController : MonoBehaviour, ISpellController {
         get => _spellName;
         set => _spellName = value;
     }
+    public Vector3 direction {
+        get => _direction;
+    }
+    public float velocity {
+        get => _velocity;
+    }
 
     // Start is called before the first frame update
     void Start() {
@@ -23,8 +31,7 @@ public class SpellDownController : MonoBehaviour, ISpellController {
 
     // Update is called once per frame
     void Update() {
-        transform.Translate(new Vector3(0.01f, 0f, 0f));
-
+        transform.Translate(direction * velocity);
     }
 
     public int ImpactDamage() {

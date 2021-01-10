@@ -6,6 +6,8 @@ public class SpellFireController : MonoBehaviour, ISpellController {
     // Número del jugador que lo ha invocado
     private int _playerNumber;
     // Nombre del hechizo
+    private Vector3 _direction = new Vector3(1f, 0f, 0f);
+    private float _velocity = 0f;
     private string _spellName;
 
     private float COLLIDER_MAX_CENTER_X = 2.4f;
@@ -18,6 +20,12 @@ public class SpellFireController : MonoBehaviour, ISpellController {
     public string spellName {
         get => _spellName;
         set => _spellName = value;
+    }
+    public Vector3 direction {
+        get => _direction;
+    }
+    public float velocity {
+        get => _velocity;
     }
 
     // Start is called before the first frame update

@@ -50,6 +50,9 @@ public class MageController : MonoBehaviour
 
     }
 
+    /*
+     * Incrementa la energía cada X segundos
+     */
     IEnumerator Energy() {
         WaitForSeconds wait = new WaitForSeconds(ENERGY_INCREASE_TIME);
         if (energy < 10) {
@@ -75,7 +78,7 @@ public class MageController : MonoBehaviour
             Vector3 myInputs = new Vector3(HorizontalMove, 0f, VerticalMove);
 
             ClearMoveAnimations();
-            if (Mathf.Abs(VerticalMove) > Mathf.Abs(HorizontalMove)) {
+            if (Mathf.Abs(VerticalMove) >= Mathf.Abs(HorizontalMove)) {
                 speed = forwardSpeed;
                 if (VerticalMove > 0) {
                     if (playerNumber == 0) {
@@ -172,7 +175,9 @@ public class MageController : MonoBehaviour
                animator.GetBool("Fall");
     }
 
-
+    /*
+     * Inicia la ejecución de un hechizo (animación del mago)
+     */
     public void StartCastingSpell(string spellName) {
         Spell spell = Initialize.spells[spellName];
         if (energy >= spell.energy) {
@@ -183,7 +188,7 @@ public class MageController : MonoBehaviour
 
     /*
      * Se llama desde un evento de animación de un hechizo, e indica que comienza a emitirse el sistema de particulas asociado
-     * Instancia el sistema de particulas correspondiente
+     * Instancia el sistema de particulas correspondiente al hechizo indicado
      * spellName: nombre del hechizo  
      */
     public void CastSpell(string spellName) {
@@ -204,6 +209,7 @@ public class MageController : MonoBehaviour
      * spellName: nombre del hechizo  
      */
     public void FinishAnimation(string spellName) {
+        // Se podría llamar directamente a ClearSpellAnimations()
         animator.SetBool(spellName, false);
     }
 

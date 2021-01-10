@@ -2358,7 +2358,6 @@ MonoBehaviour:
   - SpellCircle
   - SpellFire
   - SpellFireBall
-  castedSpells: []
   PlayerLife: {fileID: 224402095}
   PlayerEnergy: {fileID: 1599275305}
   fallInAir: 0
@@ -4135,7 +4134,6 @@ MonoBehaviour:
   - SpellCircle
   - SpellFire
   - SpellFireBall
-  castedSpells: []
   PlayerLife: {fileID: 77749445}
   PlayerEnergy: {fileID: 1012306948}
   fallInAir: 0

@@ -7,6 +7,8 @@ public class SpellCircleController : MonoBehaviour, ISpellController {
     private int _playerNumber;
     // Nombre del hechizo
     private string _spellName;
+    private Vector3 _direction = new Vector3(0f, 0f, 0f);
+    private float _velocity = 0f;
 
     public int playerNumber {
         get => _playerNumber;
@@ -15,6 +17,12 @@ public class SpellCircleController : MonoBehaviour, ISpellController {
     public string spellName {
         get => _spellName;
         set => _spellName = value;
+    }
+    public Vector3 direction {
+        get => _direction;
+    }
+    public float velocity {
+        get => _velocity;
     }
 
     // Start is called before the first frame update
